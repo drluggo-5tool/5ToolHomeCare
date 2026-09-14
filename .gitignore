@@ -1,0 +1,36 @@
+# ----------------------------
+# .NET build output
+# ----------------------------
+bin/
+obj/
+
+# ----------------------------
+# Local development settings
+# May contain connection strings/passwords
+# ----------------------------
+appsettings.Development.json
+
+# ----------------------------
+# User-specific IDE files
+# ----------------------------
+.vs/
+.vscode/
+*.user
+*.suo
+
+# ----------------------------
+# Publish output
+# ----------------------------
+publish/
+Publish/
+
+# ----------------------------
+# Logs
+# ----------------------------
+*.log
+
+# ----------------------------
+# OS files
+# ----------------------------
+.DS_Store
+Thumbs.db
