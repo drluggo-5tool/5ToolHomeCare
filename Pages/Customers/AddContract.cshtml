@@ -1,0 +1,124 @@
+@page
+@model FiveToolHomeCare.Pages.Customers.AddContractModel
+@{
+    ViewData["Title"] = "Add Annual Contract";
+}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">Add Annual Service Contract</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form method="post">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+
+            <div class="col-12">
+                <label asp-for="CustomerId"
+                       class="form-label">Customer</label>
+                <select asp-for="CustomerId"
+                        asp-items="Model.Customers"
+                        class="form-select">
+                    <option value="">Select customer...</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="StartDate"
+                       class="form-label">Contract Start Date</label>
+                <input asp-for="StartDate"
+                       type="date"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="EndDate"
+                       class="form-label">Contract End Date</label>
+                <input asp-for="EndDate"
+                       type="date"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="ServiceIntervalMonths"
+                       class="form-label">Service Interval (Months)</label>
+                <input asp-for="ServiceIntervalMonths"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="AnnualFilterCost"
+                       class="form-label">Annual Filter Cost</label>
+                <input asp-for="AnnualFilterCost"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="AnnualFilterPrice"
+                       class="form-label">Annual Filter Price</label>
+                <input asp-for="AnnualFilterPrice"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="AnnualServiceFee"
+                       class="form-label">Annual Service Fee</label>
+                <input asp-for="AnnualServiceFee"
+                       class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Notes"
+                       class="form-label"></label>
+                <textarea asp-for="Notes"
+                          class="form-control"
+                          rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary mt-4">
+            Add Contract
+        </button>
+
+    </form>
+    
+</div>
+
+@section Scripts
+{
+    <script>
+        const startDate = document.getElementById("StartDate");
+        const endDate = document.getElementById("EndDate");
+
+        startDate.addEventListener("change", function () {
+            if (!startDate.value) {
+                return;
+            }
+
+            const parts = startDate.value.split("-");
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]) - 1;
+            const day = parseInt(parts[2]);
+
+            const newEndDate = new Date(year + 1, month, day);
+            newEndDate.setDate(newEndDate.getDate() - 1);
+
+            const endYear = newEndDate.getFullYear();
+            const endMonth = String(newEndDate.getMonth() + 1).padStart(2, "0");
+            const endDay = String(newEndDate.getDate()).padStart(2, "0");
+
+            endDate.value = `${endYear}-${endMonth}-${endDay}`;
+        });
+    </script>
+}

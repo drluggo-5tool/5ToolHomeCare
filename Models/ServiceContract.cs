@@ -12,6 +12,8 @@ public class ServiceContract
 
     public DateTime EndDate { get; set; }
 
+    public int ServiceIntervalMonths { get; set; } = 3;
+
     [Column(TypeName = "decimal(10,2)")]
     public decimal AnnualFilterCost { get; set; }
 

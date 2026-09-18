@@ -81,4 +81,32 @@ public class CustomerService
             .ToListAsync();
     }
 
+    public async Task<ServiceContract> CreateServiceContractAsync(
+        int customerId,
+        DateTime startDate,
+        DateTime endDate,
+        int serviceIntervalMonths,
+        decimal annualFilterCost,
+        decimal annualFilterPrice,
+        decimal annualServiceFee,
+        string? notes)
+    {
+        var contract = new ServiceContract
+        {
+            CustomerId = customerId,
+            StartDate = startDate,
+            EndDate = endDate,
+            ServiceIntervalMonths = serviceIntervalMonths,
+            AnnualFilterCost = annualFilterCost,
+            AnnualFilterPrice = annualFilterPrice,
+            AnnualServiceFee = annualServiceFee,
+            Notes = notes
+        };
+
+        _db.ServiceContracts.Add(contract);
+        await _db.SaveChangesAsync();
+
+        return contract;
+    }
+
 }
