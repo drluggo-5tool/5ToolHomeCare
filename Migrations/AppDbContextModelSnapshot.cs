@@ -293,6 +293,73 @@ namespace FiveToolHomeCare.Migrations
                     b.ToTable("ServiceLogs");
                 });
 
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceVisit", b =>
+                {
+                    b.Property<int>("ServiceVisitId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceVisitId"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NextServiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ServiceContractId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ServiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ServiceVisitId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ServiceContractId");
+
+                    b.ToTable("ServiceVisits");
+                });
+
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceVisitPhoto", b =>
+                {
+                    b.Property<int>("ServiceVisitPhotoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceVisitPhotoId"));
+
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ServiceVisitId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ServiceVisitPhotoId");
+
+                    b.HasIndex("ServiceVisitId");
+
+                    b.ToTable("ServiceVisitPhotos");
+                });
+
             modelBuilder.Entity("FiveToolHomeCare.Models.AirFilterDetails", b =>
                 {
                     b.HasOne("FiveToolHomeCare.Models.ServiceItem", "ServiceItem")
@@ -346,6 +413,36 @@ namespace FiveToolHomeCare.Migrations
                     b.Navigation("ServiceItem");
                 });
 
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceVisit", b =>
+                {
+                    b.HasOne("FiveToolHomeCare.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("FiveToolHomeCare.Models.ServiceContract", "ServiceContract")
+                        .WithMany()
+                        .HasForeignKey("ServiceContractId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("ServiceContract");
+                });
+
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceVisitPhoto", b =>
+                {
+                    b.HasOne("FiveToolHomeCare.Models.ServiceVisit", "ServiceVisit")
+                        .WithMany("Photos")
+                        .HasForeignKey("ServiceVisitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ServiceVisit");
+                });
+
             modelBuilder.Entity("FiveToolHomeCare.Models.Customer", b =>
                 {
                     b.Navigation("OriginalLead");
@@ -360,6 +457,11 @@ namespace FiveToolHomeCare.Migrations
                     b.Navigation("AirFilterDetails");
 
                     b.Navigation("ServiceLogs");
+                });
+
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceVisit", b =>
+                {
+                    b.Navigation("Photos");
                 });
 #pragma warning restore 612, 618
         }

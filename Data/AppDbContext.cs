@@ -35,7 +35,23 @@ public class AppDbContext : DbContext
             .HasOne(l => l.ConvertedCustomer)
             .WithOne(c => c.OriginalLead)
             .HasForeignKey<Lead>(l => l.ConvertedCustomerId);
+
+        modelBuilder.Entity<ServiceVisit>()
+            .HasOne(v => v.Customer)
+            .WithMany()
+            .HasForeignKey(v => v.CustomerId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        modelBuilder.Entity<ServiceVisit>()
+            .HasOne(v => v.ServiceContract)
+            .WithMany()
+            .HasForeignKey(v => v.ServiceContractId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     public DbSet<ServiceContract> ServiceContracts { get; set; }
+
+    public DbSet<ServiceVisit> ServiceVisits { get; set; }
+
+    public DbSet<ServiceVisitPhoto> ServiceVisitPhotos { get; set; }
 }
