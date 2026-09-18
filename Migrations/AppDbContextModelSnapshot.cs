@@ -33,6 +33,12 @@ namespace FiveToolHomeCare.Migrations
                     b.Property<decimal>("Depth")
                         .HasColumnType("decimal(6,2)");
 
+                    b.Property<decimal>("FilterCost")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("FilterPrice")
+                        .HasColumnType("decimal(10,2)");
+
                     b.Property<decimal>("Height")
                         .HasColumnType("decimal(6,2)");
 
@@ -169,6 +175,48 @@ namespace FiveToolHomeCare.Migrations
                     b.ToTable("Leads");
                 });
 
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceContract", b =>
+                {
+                    b.Property<int>("ServiceContractId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceContractId"));
+
+                    b.Property<decimal>("AnnualFilterCost")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("AnnualFilterPrice")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("AnnualServiceFee")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ServiceContractId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("ServiceContracts");
+                });
+
             modelBuilder.Entity("FiveToolHomeCare.Models.ServiceItem", b =>
                 {
                     b.Property<int>("ServiceItemId")
@@ -206,6 +254,42 @@ namespace FiveToolHomeCare.Migrations
                     b.ToTable("ServiceItems");
                 });
 
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceLog", b =>
+                {
+                    b.Property<int>("ServiceLogId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceLogId"));
+
+                    b.Property<DateTime>("DateCreatedUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("FilterCost")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<decimal>("FilterPrice")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ServiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ServiceItemId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ServicePrice")
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("ServiceLogId");
+
+                    b.HasIndex("ServiceItemId");
+
+                    b.ToTable("ServiceLogs");
+                });
+
             modelBuilder.Entity("FiveToolHomeCare.Models.AirFilterDetails", b =>
                 {
                     b.HasOne("FiveToolHomeCare.Models.ServiceItem", "ServiceItem")
@@ -226,6 +310,17 @@ namespace FiveToolHomeCare.Migrations
                     b.Navigation("ConvertedCustomer");
                 });
 
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceContract", b =>
+                {
+                    b.HasOne("FiveToolHomeCare.Models.Customer", "Customer")
+                        .WithMany("ServiceContracts")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("FiveToolHomeCare.Models.ServiceItem", b =>
                 {
                     b.HasOne("FiveToolHomeCare.Models.Customer", "Customer")
@@ -237,9 +332,22 @@ namespace FiveToolHomeCare.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("FiveToolHomeCare.Models.ServiceLog", b =>
+                {
+                    b.HasOne("FiveToolHomeCare.Models.ServiceItem", "ServiceItem")
+                        .WithMany("ServiceLogs")
+                        .HasForeignKey("ServiceItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ServiceItem");
+                });
+
             modelBuilder.Entity("FiveToolHomeCare.Models.Customer", b =>
                 {
                     b.Navigation("OriginalLead");
+
+                    b.Navigation("ServiceContracts");
 
                     b.Navigation("ServiceItems");
                 });
@@ -247,6 +355,8 @@ namespace FiveToolHomeCare.Migrations
             modelBuilder.Entity("FiveToolHomeCare.Models.ServiceItem", b =>
                 {
                     b.Navigation("AirFilterDetails");
+
+                    b.Navigation("ServiceLogs");
                 });
 #pragma warning restore 612, 618
         }

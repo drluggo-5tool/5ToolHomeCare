@@ -37,4 +37,6 @@ public class Customer
     public Lead? OriginalLead { get; set; }
     
     public ICollection<ServiceItem> ServiceItems { get; set; } = new List<ServiceItem>();
+
+    public ICollection<ServiceContract> ServiceContracts { get; set; } = new List<ServiceContract>();
 }

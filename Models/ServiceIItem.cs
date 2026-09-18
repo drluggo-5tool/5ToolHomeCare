@@ -12,6 +12,9 @@ public class ServiceItem
 
     public AirFilterDetails? AirFilterDetails { get; set; }
 
+    public ICollection<ServiceLog> ServiceLogs { get; set; }
+        = new List<ServiceLog>();
+
     public ServiceItemType ItemType { get; set; }
 
     public string Location { get; set; } = "";

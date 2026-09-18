@@ -21,8 +21,13 @@ public class AirFilterDetails
 
     public string? Brand { get; set; }
 
-    public int ReplacementIntervalDays { get; set; }
+    [Column(TypeName = "decimal(10,2)")]
+    public decimal FilterCost { get; set; }
 
+    [Column(TypeName = "decimal(10,2)")]
+    public decimal FilterPrice { get; set; }
+
+    public int ReplacementIntervalDays { get; set; }
     public DateTime? LastReplacedDate { get; set; }
 
     public DateTime? NextReplacementDate { get; set; }

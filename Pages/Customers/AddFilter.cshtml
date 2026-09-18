@@ -1,0 +1,107 @@
+@page
+@model FiveToolHomeCare.Pages.Customers.AddFilterModel
+@{
+    ViewData["Title"] = "Add Air Filter";
+}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">Add Air Filter</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form method="post">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+
+            <div class="col-12">
+                <label asp-for="CustomerId"
+                       class="form-label">Customer</label>
+                <select asp-for="CustomerId"
+                        asp-items="Model.Customers"
+                        class="form-select">
+                    <option value="">Select customer...</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Location"
+                       class="form-label">Filter Location</label>
+                <input asp-for="Location"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="Width"
+                       class="form-label"></label>
+                <input asp-for="Width"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="Height"
+                       class="form-label"></label>
+                <input asp-for="Height"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-2">
+                <label asp-for="Depth"
+                       class="form-label"></label>
+                <input asp-for="Depth"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="MervRating"
+                       class="form-label">MERV Rating</label>
+                <input asp-for="MervRating"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Brand"
+                       class="form-label"></label>
+                <input asp-for="Brand"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="ReplacementIntervalDays"
+                       class="form-label">Replacement Interval (Days)</label>
+                <input asp-for="ReplacementIntervalDays"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="FilterCost"
+                       class="form-label">My Filter Cost</label>
+                <input asp-for="FilterCost"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="FilterPrice"
+                       class="form-label">Customer Filter Price</label>
+                <input asp-for="FilterPrice"
+                       class="form-control" />
+            </div>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary mt-4">
+            Add Air Filter
+        </button>
+
+    </form>
+
+</div>

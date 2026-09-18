@@ -18,6 +18,8 @@ public class AppDbContext : DbContext
 
     public DbSet<AirFilterDetails> AirFilterDetails { get; set; }
 
+    public DbSet<ServiceLog> ServiceLogs { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -34,4 +36,6 @@ public class AppDbContext : DbContext
             .WithOne(c => c.OriginalLead)
             .HasForeignKey<Lead>(l => l.ConvertedCustomerId);
     }
+
+    public DbSet<ServiceContract> ServiceContracts { get; set; }
 }

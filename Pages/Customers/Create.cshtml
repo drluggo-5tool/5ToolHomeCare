@@ -1,0 +1,124 @@
+@page
+@model FiveToolHomeCare.Pages.Customers.CreateModel
+@using FiveToolHomeCare.Models.Enums
+
+@{
+    ViewData["Title"] = "Add Customer";
+}
+
+<div class="container py-5">
+
+    <h1 class="mb-4">Add Customer</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form method="post">
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3"></div>
+
+        <div class="row g-3">
+
+            <div class="col-md-6">
+                <label asp-for="Customer.FirstName"
+                       class="form-label"></label>
+                <input asp-for="Customer.FirstName"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Customer.LastName"
+                       class="form-label"></label>
+                <input asp-for="Customer.LastName"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Customer.Email"
+                       class="form-label"></label>
+                <input asp-for="Customer.Email"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Customer.Phone"
+                       class="form-label"></label>
+                <input asp-for="Customer.Phone"
+                       class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Customer.AddressLine1"
+                       class="form-label">Address</label>
+                <input asp-for="Customer.AddressLine1"
+                       class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Customer.AddressLine2"
+                       class="form-label">Address 2</label>
+                <input asp-for="Customer.AddressLine2"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-5">
+                <label asp-for="Customer.City"
+                       class="form-label"></label>
+                <input asp-for="Customer.City"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+                <label asp-for="Customer.State"
+                       class="form-label"></label>
+                <input asp-for="Customer.State"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <label asp-for="Customer.PostalCode"
+                       class="form-label">ZIP Code</label>
+                <input asp-for="Customer.PostalCode"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Customer.AccessMethod"
+                       class="form-label">Access Method</label>
+                <select asp-for="Customer.AccessMethod"
+                        asp-items="Html.GetEnumSelectList<AccessMethod>()"
+                        class="form-select">
+                    <option value="">Select...</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="Customer.DoorAccess"
+                       class="form-label">Access Details</label>
+                <input asp-for="Customer.DoorAccess"
+                       class="form-control" />
+            </div>
+
+            <div class="col-12">
+                <label asp-for="Customer.Notes"
+                       class="form-label"></label>
+                <textarea asp-for="Customer.Notes"
+                          class="form-control"
+                          rows="3"></textarea>
+            </div>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-primary mt-4">
+            Add Customer
+        </button>
+
+    </form>
+
+</div>
