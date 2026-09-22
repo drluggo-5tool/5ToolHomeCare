@@ -109,4 +109,42 @@ public class CustomerService
         return contract;
     }
 
+    public async Task<ServiceVisit> CreateServiceVisitAsync(
+        int customerId,
+        int serviceContractId,
+        DateTime serviceDate,
+        string? notes)
+    {
+        var contract = await _db.ServiceContracts
+            .FirstAsync(c =>
+                c.ServiceContractId == serviceContractId &&
+                c.CustomerId == customerId);
+
+        var serviceVisit = new ServiceVisit
+        {
+            CustomerId = customerId,
+            ServiceContractId = serviceContractId,
+            ServiceDate = serviceDate,
+            NextServiceDate = serviceDate.AddMonths(
+                contract.ServiceIntervalMonths),
+            Notes = notes
+        };
+
+        _db.ServiceVisits.Add(serviceVisit);
+        await _db.SaveChangesAsync();
+
+        return serviceVisit;
+    }
+
+    public async Task<ServiceContract?> GetActiveServiceContractAsync(
+        int customerId)
+    {
+        return await _db.ServiceContracts
+            .Where(c =>
+                c.CustomerId == customerId &&
+                c.IsActive)
+            .OrderByDescending(c => c.StartDate)
+            .FirstOrDefaultAsync();
+    }
+
 }
