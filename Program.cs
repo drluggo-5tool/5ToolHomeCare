@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<LeadService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<CalendarService>();
 
 var app = builder.Build();
 

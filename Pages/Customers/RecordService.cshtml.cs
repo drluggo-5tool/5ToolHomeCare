@@ -8,13 +8,16 @@ namespace FiveToolHomeCare.Pages.Customers;
 public class RecordServiceModel : PageModel
 {
     private readonly CustomerService _customerService;
+    private readonly CalendarService _calendarService;
     private readonly IWebHostEnvironment _environment;
 
     public RecordServiceModel(
         CustomerService customerService,
+        CalendarService calendarService,
         IWebHostEnvironment environment)
     {
         _customerService = customerService;
+        _calendarService = calendarService;
         _environment = environment;
     }
 
@@ -122,9 +125,24 @@ public class RecordServiceModel : PageModel
             }
         }
 
-        TempData["SuccessMessage"] = "Service visit recorded.";
+        var calendar =
+            _calendarService.CreateServiceEvent(
+                serviceVisit,
+                customer!
+            );
 
-        return RedirectToPage();
+        var calendarBytes =
+            System.Text.Encoding.UTF8.GetBytes(calendar);
+
+        var calendarFileName =
+            $"{customer!.LastName}-{customer.FirstName}-Next-Service.ics";
+
+        return File(
+            calendarBytes,
+            "text/calendar",
+            calendarFileName
+        );    
+        
     }
 
     private async Task LoadCustomersAsync()
