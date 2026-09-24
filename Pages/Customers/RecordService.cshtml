@@ -15,7 +15,8 @@
         </div>
     }
 
-    <form method="post">
+    <form method="post"
+        enctype="multipart/form-data">
 
         <div asp-validation-summary="ModelOnly"
              class="text-danger mb-3"></div>
@@ -46,6 +47,15 @@
                 <textarea asp-for="Notes"
                           class="form-control"
                           rows="4"></textarea>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label">Service Photos</label>
+                <input asp-for="Photos"
+                    type="file"
+                    class="form-control"
+                    accept="image/*"
+                    multiple />
             </div>
 
         </div>

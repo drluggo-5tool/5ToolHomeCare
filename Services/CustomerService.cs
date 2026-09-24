@@ -147,4 +147,30 @@ public class CustomerService
             .FirstOrDefaultAsync();
     }
 
+    public async Task<Customer?> GetCustomerAsync(int customerId)
+    {
+        return await _db.Customers
+            .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+    }
+
+    public async Task<ServiceVisitPhoto> AddServiceVisitPhotoAsync(
+        int serviceVisitId,
+        string fileName,
+        string filePath,
+        string? caption = null)
+    {
+        var photo = new ServiceVisitPhoto
+        {
+            ServiceVisitId = serviceVisitId,
+            FileName = fileName,
+            FilePath = filePath,
+            Caption = caption
+        };
+
+        _db.ServiceVisitPhotos.Add(photo);
+        await _db.SaveChangesAsync();
+
+        return photo;
+    }
+
 }

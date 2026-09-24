@@ -39,4 +39,5 @@ public class Customer
     public ICollection<ServiceItem> ServiceItems { get; set; } = new List<ServiceItem>();
 
     public ICollection<ServiceContract> ServiceContracts { get; set; } = new List<ServiceContract>();
+
 }
