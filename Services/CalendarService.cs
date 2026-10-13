@@ -19,7 +19,7 @@ UID:{eventId}@5toolhomecare.com
 DTSTAMP:{DateTime.UtcNow:yyyyMMdd'T'HHmmss'Z'}
 DTSTART;VALUE=DATE:{serviceVisit.NextServiceDate:yyyyMMdd}
 SUMMARY:Filter Replace - {customer.FirstName} {customer.LastName}
-DESCRIPTION:{serviceVisit.Notes ?? ""}
+DESCRIPTION:{EscapeCalendarText(serviceVisit.Notes)}
 BEGIN:VALARM
 TRIGGER:-P14D
 ACTION:DISPLAY
@@ -30,5 +30,20 @@ END:VCALENDAR
 """;
 
         return calendar;
+    }
+
+    private static string EscapeCalendarText(string? text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return "";
+        }
+
+        return text
+            .Replace("\\", "\\\\")
+            .Replace("\r\n", "\\n")
+            .Replace("\n", "\\n")
+            .Replace(",", "\\,")
+            .Replace(";", "\\;");
     }
 }

@@ -1,0 +1,41 @@
+@page
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h2>5 Tool Home Care - Admin Dashboard</h2>
+
+<p>Select an operation:</p>
+
+<div class="d-grid gap-3 col-md-6">
+
+    <a asp-page="/Customers/RecordService"
+       class="btn btn-primary">
+        Record Service
+    </a>
+
+    <a asp-page="/Customers/Create"
+       class="btn btn-outline-primary">
+        Add Customer
+    </a>
+
+    <a asp-page="/Customers/AddFilter"
+       class="btn btn-outline-primary">
+        Add Filter
+    </a>
+
+    <a asp-page="/Customers/AddContract"
+       class="btn btn-outline-primary">
+        Add Contract
+    </a>
+
+</div>
+
+<form method="post" asp-page="/Logout" class="mt-4">
+
+    <button type="submit" class="btn btn-outline-danger">
+        Log Out
+    </button>
+
+</form>

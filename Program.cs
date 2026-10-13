@@ -1,11 +1,25 @@
 using FiveToolHomeCare.Services;
 using FiveToolHomeCare.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/Customers");
+    options.Conventions.AuthorizePage("/Admin");
+});
+
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login";
+        options.AccessDeniedPath = "/Login";
+    });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
@@ -17,6 +31,8 @@ builder.Services.AddScoped<LeadService>();
 builder.Services.AddScoped<EmailService>();
 builder.Services.AddScoped<CustomerService>();
 builder.Services.AddScoped<CalendarService>();
+builder.Services.AddSingleton<IPasswordHasher<string>,
+    PasswordHasher<string>>();
 
 var app = builder.Build();
 
@@ -32,6 +48,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
