@@ -84,8 +84,8 @@ public class RecordServiceModel : PageModel
             $"{customerName}_{ServiceDate:yyyy-MM-dd}_Visit-{serviceVisit.ServiceVisitId}";
 
         var visitFolder = Path.Combine(
-            _environment.WebRootPath,
-            "uploads",
+            _environment.ContentRootPath,
+            "PrivateUploads",
             "service-visits",
             folderName
         );
@@ -115,7 +115,7 @@ public class RecordServiceModel : PageModel
                 await photo.CopyToAsync(stream);
 
                 var relativePath =
-                    $"/uploads/service-visits/{folderName}/{fileName}";
+                    $"service-visits/{folderName}/{fileName}";
 
                 await _customerService.AddServiceVisitPhotoAsync(
                     serviceVisit.ServiceVisitId,

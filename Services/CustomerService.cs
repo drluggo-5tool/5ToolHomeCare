@@ -173,4 +173,12 @@ public class CustomerService
         return photo;
     }
 
+    public async Task<ServiceVisitPhoto?> GetServiceVisitPhotoAsync(
+        int serviceVisitPhotoId)
+    {
+        return await _db.ServiceVisitPhotos.FindAsync(
+            serviceVisitPhotoId
+        );
+    }
+
 }
